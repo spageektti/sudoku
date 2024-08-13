@@ -1,0 +1,83 @@
+html, body, main {
+    height: 100%;
+    background-color: #000000; /* Black background */
+    color: #00ffff; /* Neon cyan text */
+    font-family: "Fira Mono", monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #00ffff; /* Neon cyan */
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+}
+
+#sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 50px);
+    grid-template-rows: repeat(9, 50px);
+    gap: 2px;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: #222222; /* Dark gray */
+    color: #00ffff; /* Neon cyan text */
+    text-align: center;
+    line-height: 50px;
+    font-size: 24px;
+    border: 1px solid #555555; /* Dark border */
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    background-color: #222222; /* Dark gray */
+    color: #00ffff; /* Neon cyan text */
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 24px;
+}
+
+.cell input:disabled {
+    background-color: #333333; /* Darker gray for pre-filled cells */
+}
+
+#checkBtn {
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #000000; /* Black */
+    border: solid 1px #ffffff; /* White border */
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#checkBtn:hover {
+    background-color: #333333; /* Darker gray */
+}
+
+#checkBtn:active {
+    background-color: #555555; /* Even darker gray */
+    transform: scale(0.98);
+}
+
+#checkBtn:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffffff;
+}
