@@ -3,31 +3,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkBtn = document.getElementById('checkBtn');
     const difficultyDropdown = document.getElementById('difficulty');
 
+    // needs to be generated fast somehow, sample board for now
+    const sampleBoard = [
+        [5, 3, 4, 6, 7, 8, 9, 1, 2],
+        [6, 7, 2, 1, 9, 5, 3, 4, 8],
+        [1, 9, 8, 3, 4, 2, 5, 6, 7],
+        [8, 5, 9, 7, 6, 1, 4, 2, 3],
+        [4, 2, 6, 8, 5, 3, 7, 9, 1],
+        [7, 1, 3, 9, 2, 4, 8, 5, 6],
+        [9, 6, 1, 5, 3, 7, 2, 8, 4],
+        [2, 8, 7, 4, 1, 9, 6, 3, 5],
+        [3, 4, 5, 2, 8, 6, 1, 7, 9]
+    ];
+
+    function shuffleBoard(board) {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const i1 = Math.floor(Math.random() * 9);
+                const j1 = Math.floor(Math.random() * 9);
+                const temp = board[i][j];
+                board[i][j] = board[i1][j1];
+                board[i1][j1] = temp;
+            }
+        }
+    }
+
+    function removeNumbersFromBoard(board, difficulty) {
+        let attempts = difficulty === 'easy' ? 25 : difficulty === 'medium' ? 40 : 55;
+
+        while (attempts > 0) {
+            const row = Math.floor(Math.random() * 9);
+            const col = Math.floor(Math.random() * 9);
+
+            if (board[row][col] !== 0) {
+                board[row][col] = 0;
+                attempts--;
+            }
+        }
+    }
+
     function generateSudoku(difficulty = 'easy') {
-        const puzzles = {
-            easy: '530070000600195000098000060800060003400803001700020006060000280000419005000080079',
-            medium: '009000600060005080200190007003050000008000600000080300800027005010500020005000800',
-            hard: '020600000004000050006050008070000004000207000900000010500040700030000200000009040'
-        };
-        const puzzle = puzzles[difficulty].split('');
+        const grid = JSON.parse(JSON.stringify(sampleBoard));
+        shuffleBoard(grid);
+        removeNumbersFromBoard(grid, difficulty);
 
         board.innerHTML = '';
 
-        for (let i = 0; i < 81; i++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.maxLength = '1';
-            input.pattern = '[1-9]';
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = '1';
+                input.pattern = '[1-9]';
 
-            if (puzzle[i] !== '0') {
-                input.value = puzzle[i];
-                input.disabled = true;
+                if (grid[row][col] !== 0) {
+                    input.value = grid[row][col];
+                    input.disabled = true;
+                }
+
+                cell.appendChild(input);
+                board.appendChild(cell);
             }
-
-            cell.appendChild(input);
-            board.appendChild(cell);
         }
     }
 
