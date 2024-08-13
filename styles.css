@@ -81,3 +81,33 @@ h1 {
     outline: none;
     box-shadow: 0 0 5px #ffffff;
 }
+
+
+select {
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: #000000; /* Black */
+    border: solid 1px #ffffff; /* White border */
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select:hover {
+    background-color: #333333; /* Darker gray */
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffffff;
+}
+
+select option {
+    background-color: #000000; /* Black */
+    color: #ffffff; /* White text */
+}
