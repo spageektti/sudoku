@@ -2,28 +2,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = document.getElementById('sudoku-board');
     const checkBtn = document.getElementById('checkBtn');
     const difficultyDropdown = document.getElementById('difficulty');
+    const timerDisplay = document.getElementById('timer');
+    let timerInterval;
+    let startTime;
 
-    async function fetchSudokuBoard() {
-        const response = await fetch('https://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:1){grids{solution}}}');
-        const data = await response.json();
-        return data.newboard.grids[0].solution;
+    function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(() => {
+            const elapsedTime = Date.now() - startTime;
+            const minutes = Math.floor(elapsedTime / 60000) % 60;
+            const seconds = Math.floor((elapsedTime / 1000) % 60);
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
     }
 
-    function removeNumbersFromBoard(board, difficulty) {
-        let attempts = difficulty === 'easy' ? 25 : difficulty === 'medium' ? 40 : 55;
-        while (attempts > 0) {
-            const row = Math.floor(Math.random() * 9);
-            const col = Math.floor(Math.random() * 9);
-            if (board[row][col] !== 0) {
-                board[row][col] = 0;
-                attempts--;
-            }
-        }
+    function stopTimer() {
+        clearInterval(timerInterval);
     }
 
-    async function generateSudoku(difficulty = 'easy') {
-        const grid = await fetchSudokuBoard();
-        removeNumbersFromBoard(grid, difficulty);
+    function generateSudoku(difficulty = 'easy') {
+        stopTimer();
+        const puzzleString = sudoku.generate(difficulty);
+        const grid = sudoku.board_string_to_grid(puzzleString);
         board.innerHTML = '';
         for (let row = 0; row < 9; row++) {
             for (let col = 0; col < 9; col++) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.type = 'text';
                 input.maxLength = '1';
                 input.pattern = '[1-9]';
-                if (grid[row][col] !== 0) {
+                if (grid[row][col] !== '.') {
                     input.value = grid[row][col];
                     input.disabled = true;
                 }
@@ -41,11 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 board.appendChild(cell);
             }
         }
+        startTimer();
     }
 
     function validateInput(input) {
         const value = input.value;
-        if (value === '') return false; // Check for empty cells
+        if (value === '') return false;
         const index = Array.from(input.parentNode.parentNode.children).indexOf(input.parentNode);
         const row = Math.floor(index / 9);
         const col = index % 9;
@@ -89,7 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const allFilled = Array.from(inputs).every(input => input.value !== '');
 
         if (isValid && allFilled) {
-            alert('Board is valid!');
+            stopTimer();
+            alert(`Board is valid! Time: ${timerDisplay.textContent}`);
         } else if (!allFilled) {
             alert('The board has empty cells.');
         } else {
