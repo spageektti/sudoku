@@ -1,7 +1,11 @@
-html, body, main {
+html,
+body,
+main {
     height: 100%;
-    background-color: #000000; /* Black background */
-    color: #00ffff; /* Neon cyan text */
+    background-color: #000000;
+    /* Black background */
+    color: #00ffff;
+    /* Neon cyan text */
     font-family: "Fira Mono", monospace;
     display: flex;
     align-items: center;
@@ -20,7 +24,8 @@ h1 {
     text-align: center;
     font-weight: 400;
     margin-bottom: 20px;
-    color: #00ffff; /* Neon cyan */
+    color: #00ffff;
+    /* Neon cyan */
     text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
 }
 
@@ -28,25 +33,55 @@ h1 {
     display: grid;
     grid-template-columns: repeat(9, 50px);
     grid-template-rows: repeat(9, 50px);
-    gap: 2px;
 }
 
 .cell {
     width: 50px;
     height: 50px;
-    background-color: #222222; /* Dark gray */
-    color: #00ffff; /* Neon cyan text */
+    background-color: #222222;
+    /* Dark gray */
+    color: #00ffff;
+    /* Neon cyan text */
     text-align: center;
-    line-height: 50px;
     font-size: 24px;
-    border: 1px solid #555555; /* Dark border */
+    box-sizing: border-box;
+    border: 1px solid #555555;
+}
+
+.cell:nth-child(4),
+.cell:nth-child(7),
+.cell:nth-child(31),
+.cell:nth-child(34),
+.cell:nth-child(58),
+.cell:nth-child(61) {
+    border-left: 1px solid #00ffff;
+}
+
+.cell:nth-child(3),
+.cell:nth-child(6),
+.cell:nth-child(9),
+.cell:nth-child(30),
+.cell:nth-child(33),
+.cell:nth-child(36),
+.cell:nth-child(57),
+.cell:nth-child(60),
+.cell:nth-child(63) {
+    border-right: 1px solid #00ffff;
+}
+
+.cell:nth-child(n+1):nth-child(-n+9),
+.cell:nth-child(n+28):nth-child(-n+36),
+.cell:nth-child(n+55):nth-child(-n+63) {
+    border-top: 1px solid #00ffff;
 }
 
 .cell input {
     width: 100%;
     height: 100%;
-    background-color: #222222; /* Dark gray */
-    color: #00ffff; /* Neon cyan text */
+    background-color: #222222;
+    /* Dark gray */
+    color: #00ffff;
+    /* Neon cyan text */
     text-align: center;
     border: none;
     outline: none;
@@ -54,14 +89,17 @@ h1 {
 }
 
 .cell input:disabled {
-    background-color: #333333; /* Darker gray for pre-filled cells */
+    background-color: #333333;
+    /* Darker gray for pre-filled cells */
 }
 
 #checkBtn {
     margin-top: 20px;
     color: #ffffff;
-    background-color: #000000; /* Black */
-    border: solid 1px #ffffff; /* White border */
+    background-color: #000000;
+    /* Black */
+    border: solid 1px #ffffff;
+    /* White border */
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
@@ -69,11 +107,13 @@ h1 {
 }
 
 #checkBtn:hover {
-    background-color: #333333; /* Darker gray */
+    background-color: #333333;
+    /* Darker gray */
 }
 
 #checkBtn:active {
-    background-color: #555555; /* Even darker gray */
+    background-color: #555555;
+    /* Even darker gray */
     transform: scale(0.98);
 }
 
@@ -86,8 +126,10 @@ h1 {
 select {
     margin-bottom: 20px;
     color: #ffffff;
-    background-color: #000000; /* Black */
-    border: solid 1px #ffffff; /* White border */
+    background-color: #000000;
+    /* Black */
+    border: solid 1px #ffffff;
+    /* White border */
     border-radius: 5px;
     padding: 10px;
     text-align: center;
@@ -99,7 +141,8 @@ select {
 }
 
 select:hover {
-    background-color: #333333; /* Darker gray */
+    background-color: #333333;
+    /* Darker gray */
 }
 
 select:focus {
@@ -108,6 +151,49 @@ select:focus {
 }
 
 select option {
-    background-color: #000000; /* Black */
-    color: #ffffff; /* White text */
+    background-color: #000000;
+    /* Black */
+    color: #ffffff;
+    /* White text */
+}
+
+#number-selector {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.number-btn {
+    background-color: #333333;
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.number-btn:hover {
+    background-color: #555555;
+}
+
+.number-btn:active {
+    background-color: #777777;
+    transform: scale(0.98);
+}
+
+.number-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffffff;
+}
+
+.highlight {
+    color: #00ff00 !important;
+    /* Neon green */
+}
+
+#timer {
+    margin: 5px;
 }

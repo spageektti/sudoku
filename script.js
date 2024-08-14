@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkBtn = document.getElementById('checkBtn');
     const difficultyDropdown = document.getElementById('difficulty');
     const timerDisplay = document.getElementById('timer');
+    const numberButtons = document.querySelectorAll('#number-selector .number-btn');
     let timerInterval;
     let startTime;
+    let selectedNumber = '';
 
     function startTimer() {
         startTime = Date.now();
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateInput(input) {
         const value = input.value;
-        if (value === '') return false;
+        if (value === '') return true;
         const index = Array.from(input.parentNode.parentNode.children).indexOf(input.parentNode);
         const row = Math.floor(index / 9);
         const col = index % 9;
@@ -98,6 +100,23 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('There are some errors on the board.');
         }
     }
+
+    function highlightNumber(number) {
+        const inputs = document.querySelectorAll('.cell input');
+        inputs.forEach(input => {
+            input.classList.remove('highlight');
+            if (input.value === number) {
+                input.classList.add('highlight');
+            }
+        });
+    }
+
+    numberButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedNumber = button.textContent;
+            highlightNumber(selectedNumber);
+        });
+    });
 
     generateSudoku(difficultyDropdown.value);
     difficultyDropdown.addEventListener('change', (event) => {
